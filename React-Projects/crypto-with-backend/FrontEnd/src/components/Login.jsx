@@ -9,6 +9,7 @@ function Login() {
     const [name, setName] = useState("")
     const [password, setPassword] = useState()
     const notify = () => toast("Wow so easy!");
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const fetchLoginApi = async () => {
         try {
@@ -18,7 +19,7 @@ function Login() {
                 return
             }
 
-            const response = await axios.post("http://localhost:3000/login", {
+            const response = await axios.post(`${backendUrl}/login`, {
                 name: name,
                 password: password
             })

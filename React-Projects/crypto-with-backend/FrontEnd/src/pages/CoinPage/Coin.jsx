@@ -42,7 +42,7 @@ function Coin() {
         <div>
             <div>
                 {
-                    coinData ? <div className='mt-20'>
+                    coinData ? <div className='md:mt-20 mt-13'>
                         <img className='w-32 m-auto' src={coinData.image.large} alt="" />
                         <p className='text-5xl font-semibold text-center mt-7'>{coinData.name} ({coinData.symbol.toUpperCase()})</p>
                     </div> : <Lodder />

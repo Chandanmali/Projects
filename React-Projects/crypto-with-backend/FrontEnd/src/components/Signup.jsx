@@ -10,6 +10,8 @@ function Signup() {
     const [password, setPassword] = useState()
     const [email, setEmail] = useState("")
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
     const fetchSignupApi = async () => {
 
         if (!name || !password || !email) {
@@ -18,7 +20,7 @@ function Signup() {
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/signup", {
+            const response = await axios.post(`${backendUrl}/signup`, {
                 name: name,
                 password: password,
                 email: email
@@ -76,7 +78,6 @@ function Signup() {
                             <button onClick={fetchSignupApi} className='bg-blue-800 py-2 md:py-2 rounded-lg font-semibold md:text-xl text-sm  cursor-pointer '>sign-up</button>
                             <button onClick={() => navigate("/login")} className='bg-blue-800 py-2 px-2 rounded-lg font-semibold md:text-xl text-sm cursor-pointer'>Already sign-up? Login</button>
                         </div>
-
                     </div>
 
                 </div>
