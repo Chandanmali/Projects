@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import Navbar from './components/Navbar'
 import { Outlet } from 'react-router-dom'
 import Footer from './components/Footer'
+import { ToastContainer } from 'react-toastify'
 
 
 function App() {

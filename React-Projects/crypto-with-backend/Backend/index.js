@@ -13,42 +13,58 @@ app.use(cors())
 app.use(express.json())  //middleware
 mongoose.connect(MONGODB_URL).then(() => console.log("Mongodb conneted successfully")).catch(() => console.log("mongoDB connection faild"))
 
-app.post('/signup', async(req, res) => {
-    const name = req.body.name
-    const password = req.body.password
-    const email = req.body.email
+app.post('/signup', async (req, res) => {
+   const name = req.body.name
+   const password = req.body.password
+   const email = req.body.email
 
-    await userModel.create({
-        name: name,
-        password: password,
-        email: email
-    })
+   if(!name || !password || !email)
+   {
+      res.status(400). json({msg: "required all fields"})
+   }
 
-    res.json({msg: "signup done successfully"})
+   const exisingUser = await userModel.findOne({
+      email: email
+   })
+
+   if(exisingUser)
+   {
+      res.status(409).json({msg: "already registered, Please login"})
+   }
+
+   await userModel.create({
+      name: name,
+      password: password,
+      email: email
+   })
+
+   res.json({ msg: "signup done successfully" })
 })
 
-app.post("/login", async(req, res) => {
-    const name = req.body.name
-    const password = req.body.password
+app.post("/login", async (req, res) => {
+   try {
+      const name = req.body.name
+      const password = req.body.password
 
-     const response = await userModel.findOne({
-        name: name,
-        password: password
-     })
-     console.log(response)
+      const response = await userModel.findOne({
+         name: name,
+         password: password
+      })
+      console.log(response)
 
-     if(response)
-     {
-        const token = jwt.sign({
-            userId: response._id
-        }, JWT_SECRETE)
+      const token = jwt.sign({
+         userId: response._id
+      }, JWT_SECRETE)
 
-        res.json({token: token})
-     }
+      res.status(200).json({ token: token })
+   }
 
-     else{
-        res.json({msg: "user not found"})
-     }
+   catch (err) {
+      res.status(400).json({ msg: "Invalid user" })
+   }
+
+
+
 })
 
 app.listen(PORT, () => {

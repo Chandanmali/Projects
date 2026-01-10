@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CoinContext } from '../../context/CoinContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 function Home() {
 
-    const { allCoin, currency } = useContext(CoinContext)
+    const { allCoin, currency, token, setToken } = useContext(CoinContext)
 
     const [displayData, setDisplayData] = useState([])
 
     const [search, setSearch] = useState("")
+
+    const navigate = useNavigate()
 
     const filterDataHandler = (searchTeaxt) => {
          const filter = allCoin.filter((item) => {
@@ -19,15 +21,42 @@ function Home() {
     }
 
     const searchCoinHandler = (e) => {
+        
+            if(token === null)
+            {
+                alert("You not logged-In, please login first")
+                navigate("/login")
+                return
+            }
+        
         const value = e.target.value
         setSearch(value)
         filterDataHandler(value)
 
     }
 
+    const tokenHandler = (id) => {
+        if(token === null)
+        {
+             alert("You not logged-In, please login first")
+                navigate("/login")
+                return
+        }
+        else
+        {
+            navigate(`/coin/${id}`)
+                return
+        }
+    } 
+
     useEffect(() => {
         setDisplayData(allCoin)
     }, [allCoin])
+
+     useEffect(() => {
+        setToken(localStorage.getItem("token"))
+    }, [])
+
 
     console.log(allCoin)
     return (
@@ -41,14 +70,14 @@ function Home() {
                     <p className='flex flex-col text-lg'>welcome to world's largest cryptocurrency marketplace. <span>Sign up to explore more about cryptos</span></p>
                 </div>
 
-                <div className=' mt-8 bg-white text-black max-w-[570px] mx-auto rounded-sm'>
+                <div className=' mt-8 bg-white text-black max-w-142.5 mx-auto rounded-sm'>
                     <input
                      onChange={searchCoinHandler}
-                     className='px-5 py-3 w-[570px] outline-none' type="text" placeholder='Search cryptos...' />
+                     className='px-5 py-3 w-142.5 outline-none' type="text" placeholder='Search cryptos...' />
                 </div>
 
                 <div>
-                    <div className='grid grid-cols-[1fr_2.5fr_1fr_1.5fr_2fr] bg-blue-950 max-w-[900px] m-auto mt-12 px-7 gap-5 border-b border-gray-400 rounded-t-2xl py-4 '>
+                    <div className='grid grid-cols-[1fr_2.5fr_1fr_1.5fr_2fr] bg-blue-950 max-w-225 m-auto mt-12 px-7 gap-5 border-b border-gray-400 rounded-t-2xl py-4 '>
                         <p>#</p>
                         <p>Coins</p>
                         <p>Price</p>
@@ -58,7 +87,7 @@ function Home() {
 
                     {
                         displayData.slice(0, 10).map((item) => {
-                            return <Link to={`/coin/${item.id}`} className='grid grid-cols-[1fr_2.5fr_1fr_1.5fr_2fr] bg-blue-950 max-w-[900px] m-auto  px-7  border-b border-gray-500 rounded-t-2xl py-3 items-center last:border-none cursor-pointer'>
+                            return <div onClick={() => tokenHandler(item.id)} className='grid grid-cols-[1fr_2.5fr_1fr_1.5fr_2fr] bg-blue-950 max-w-225 m-auto  px-7  border-b border-gray-500 rounded-t-2xl py-3 items-center last:border-none cursor-pointer'>
                                 <p>{item.market_cap_rank}</p>
                                 <div className='flex items-center gap-3'>
                                     <img className='w-10' src={item.image} alt="" />
@@ -73,7 +102,7 @@ function Home() {
                                 
                                 <p className='text-right'>{currency.symbol} {item.market_cap.toLocaleString()}</p>
 
-                            </Link>
+                            </div>
                         })
 
                     }
