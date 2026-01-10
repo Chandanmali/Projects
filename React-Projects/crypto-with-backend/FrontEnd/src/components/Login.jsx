@@ -40,11 +40,11 @@ function Login() {
     return (
         <div>
             <div className='min-h-screen bg-linear-to-b from-[#0b004e] via-[#1d152f] to-[#002834] text-white'>
-                <div className='pt-10'>
-                    <p className='text-5xl font-bold text-center '>Login</p>
+                <div className='pt-15 md:pt-10'>
+                    <p className='text-3xl md:text-5xl font-bold text-center '>Login</p>
                 </div>
 
-                <div className='border max-w-162 m-auto py-15 px-5 rounded-2xl mt-10'>
+                <div className='border max-w-[300px] md:max-w-162 m-auto py-8 md:py-15 px-5 rounded-2xl mt-10'>
                     <div className='flex flex-col gap-7 px-5'>
                         <input
                             onChange={(e) => setName(e.target.value)}
@@ -58,9 +58,9 @@ function Login() {
                             type="text"
                             placeholder='Enter Password' />
 
-                        <div className='flex flex-col gap-5 mt-5 '>
-                            <button onClick={fetchLoginApi} className='bg-blue-800 py-2 rounded-lg font-semibold text-xl cursor-pointer '>Login</button>
-                            <button onClick={() => navigate('/signup')} className='bg-blue-800 py-2 rounded-lg font-semibold text-xl cursor-pointer'>create account</button>
+                        <div className='flex flex-col gap-5  md:mt-5 '>
+                            <button onClick={fetchLoginApi} className='bg-blue-800 py-2 md:py-2 rounded-lg font-semibold md:text-xl text-sm  cursor-pointer '>Login</button>
+                            <button onClick={() => navigate('/signup')} className='bg-blue-800 py-2 px-2 rounded-lg font-semibold md:text-xl text-sm cursor-pointer'>create account</button>
 
                         </div>
 
@@ -71,7 +71,7 @@ function Login() {
 
             </div>
             {/* Toast container only once */}
-            <div className='text-black font-bold'>
+            <div className='text-black font-bold '>
 
                 <ToastContainer position="top-right" autoClose={3000} />
             </div>
