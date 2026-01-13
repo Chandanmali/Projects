@@ -8,8 +8,7 @@ import CoinContextProvider from './context/CoinContext.jsx'
 import Coin from './pages/CoinPage/Coin.jsx'
 import Signup from './components/Signup.jsx'
 import Login from './components/Login.jsx'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
 
 const appRouter = createBrowserRouter([
   {

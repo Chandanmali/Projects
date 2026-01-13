@@ -9,6 +9,7 @@ function Coin() {
 
   const { coinId } = useParams();
   const [coinData, setCoinData] = useState()
+  
 
   const {currency} = useContext(Coincontext);
   const [coinHistory, setCoinHistory] = useState()
